@@ -6,15 +6,26 @@ const ESTAGIOS = ["Inicio", "Jogando", "Finalizado"];
 
 const initialState = {
     gameStage: ESTAGIOS[0],
-    perguntas
+    perguntas,
+    perguntaAtual: 0,
 }
 
 const quizReducer = (estagio, acao) => {
-    console.log(estagio, acao)
 
     switch (acao.type) {
         case "MUDOU_ESTAGIO":
-            return estagio
+            return {
+                ...estagio,
+                gameStage: ESTAGIOS[1],
+            }
+        case "REORDENAR":
+            const reordenarPerguntas = perguntas.sort(() => {
+                return Math.random() - 0.5;
+            });
+            return {
+                ...estagio,
+                perguntas: reordenarPerguntas,
+            }
         default:
             return estagio
     }
